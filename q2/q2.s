@@ -7,7 +7,7 @@ stack_buf: .space 8192
 fmt_mid:  .string "%lld"
 fmt_last: .string "%lld\n"
 .section .text
-.global main
+.globl main
 
 main:
     addi sp, sp, -64
@@ -75,7 +75,7 @@ main:
     ld   t5, 0(t5)
 
     bgt  t5, t3, .pop_done
-    addi s6, s6, -8       # pop
+    addi s6, s6, -8
     j    .pop_loop
 
 .pop_done:
