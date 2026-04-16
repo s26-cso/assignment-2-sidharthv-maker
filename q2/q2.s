@@ -9,7 +9,7 @@ fmt_last: .string "%lld\n"
 .section .text
 .globl main
 main:
-    addi sp, sp, -72
+    addi sp, sp, -80
     sd   ra,  0(sp)
     sd   s0,  8(sp)
     sd   s1, 16(sp)
@@ -147,15 +147,15 @@ main:
 
 .exit:
     li   a0, 0
-    ld   ra,  0(s7)
-    ld   s0,  8(s7)
-    ld   s1, 16(s7)
-    ld   s2, 24(s7)
-    ld   s3, 32(s7)
-    ld   s4, 40(s7)
-    ld   s5, 48(s7)
-    ld   s6, 56(s7)
-    ld   s7, 64(s7)
-    mv   sp, s7
-    addi sp, sp, 72
+    mv   sp, s7             # changed: moved before register restores
+    ld   ra,  0(sp)
+    ld   s0,  8(sp)
+    ld   s1, 16(sp)
+    ld   s2, 24(sp)
+    ld   s3, 32(sp)
+    ld   s4, 40(sp)
+    ld   s5, 48(sp)
+    ld   s6, 56(sp)
+    ld   s7, 64(sp)
+    addi sp, sp, 80
     ret
