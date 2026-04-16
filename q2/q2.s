@@ -8,7 +8,6 @@ fmt_mid:  .string "%lld "
 fmt_last: .string "%lld\n"
 .section .text
 .globl main
-
 main:
     addi sp, sp, -64
     sd   ra,  0(sp)
@@ -21,10 +20,21 @@ main:
     sd   s6, 56(sp)
     mv   s0, a0
     mv   s1, a1
-
     addi s2, s0, -1
     beq s2, x0, .exit
-    la s3, arr
+
+    slli t0, s2, 3
+    li   t1, 3
+    mul  t0, t0, t1
+    addi t0, t0, 15
+    andi t0, t0, -16
+    sub  sp, sp, t0
+
+    mv   s3, sp
+    slli t0, s2, 3
+    add  s4, s3, t0
+    add  s5, s4, t0
+
     li t0, 1
 
 .parse_loop:
@@ -41,7 +51,6 @@ main:
     j    .parse_loop
 
 .parse_done:
-    la   s4, result
     li   t0, 0
     li   t1, -1
 
@@ -55,7 +64,6 @@ main:
 
 .init_done:
     #arr[stack[bottom]] > ... > arr[stack[top]], so stack.top() is always the nearest-right greater index candidate.
-    la   s5, stack_buf
     mv   s6, s5
     addi t0, s2, -1       
 
