@@ -9,7 +9,7 @@ fmt_last: .string "%lld\n"
 .section .text
 .globl main
 main:
-    addi sp, sp, -64
+    addi sp, sp, -72
     sd   ra,  0(sp)
     sd   s0,  8(sp)
     sd   s1, 16(sp)
@@ -18,6 +18,9 @@ main:
     sd   s4, 40(sp)
     sd   s5, 48(sp)
     sd   s6, 56(sp)
+    sd   s7, 64(sp)
+    mv   s7, sp
+
     mv   s0, a0
     mv   s1, a1
     addi s2, s0, -1
@@ -42,7 +45,15 @@ main:
     slli t1, t0, 3        #offset = index * 8
     add  t1, s1, t1
     ld   a0, 0(t1)
+
+    addi sp, sp, -16
+    sd   t0, 0(sp)
+    sd   t1, 8(sp)
     call atoi
+    ld   t0, 0(sp)
+    ld   t1, 8(sp)
+    addi sp, sp, 16
+
     addi t2, t0, -1
     slli t2, t2, 3
     add  t2, s3, t2
@@ -136,13 +147,15 @@ main:
 
 .exit:
     li   a0, 0
-    ld   ra,  0(sp)
-    ld   s0,  8(sp)
-    ld   s1, 16(sp)
-    ld   s2, 24(sp)
-    ld   s3, 32(sp)
-    ld   s4, 40(sp)
-    ld   s5, 48(sp)
-    ld   s6, 56(sp)
-    addi sp, sp, 64
+    ld   ra,  0(s7)
+    ld   s0,  8(s7)
+    ld   s1, 16(s7)
+    ld   s2, 24(s7)
+    ld   s3, 32(s7)
+    ld   s4, 40(s7)
+    ld   s5, 48(s7)
+    ld   s6, 56(s7)
+    ld   s7, 64(s7)
+    mv   sp, s7
+    addi sp, sp, 72
     ret
