@@ -4,7 +4,7 @@ arr: .space 8192
 result: .space 8192
 stack_buf: .space 8192
 .section .data
-fmt_mid:  .string "%lld"
+fmt_mid:  .string "%lld "
 fmt_last: .string "%lld\n"
 .section .text
 .globl main
